@@ -1,4 +1,4 @@
-# Django Rest Framework(DRF)를 활용한 ETL 파이프라인 구축
+# Django Rest Framework 기반 REST API 구축
 
 참여자 : 홍석원, 민경도
 
