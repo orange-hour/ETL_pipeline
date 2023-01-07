@@ -12,6 +12,8 @@
 
 ---
 
+*해당 REST API에서 발생한 로그 데이터를 수집한 ETL 파이프라인 구축 프로젝트에 관한 설명: <a href="https://github.com/orange-hour/ETL_pipeline/tree/master/myproject">**[🔗 링크]**</a>
+
 ### ****프로젝트 개요****
 
 - 회원가입 및 글쓰기, 글 수정, 삭제가 가능한 게시판 서비스를 구축
