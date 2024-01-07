@@ -1,93 +1,54 @@
-# 로그 데이터 수집을 위한 ETL 파이프라인 구축
-
-참여자 : 홍석원, 민경도
-
+# Building a Website Log ETL Pipeline
 ---
 
-**프로젝트 기간:** 2022.12.01 ~ 20
+**Project Duration:** 2022.12.01 ~ 12.20 <br>
+**Participants**: @orange-hour, @ggydo59
 
-**프로젝트 도구:** AWS S3, AWS EC2, Ubuntu Linux, DRF(Django Rest Framework), MySQL
+### Project Overview
 
-**사용 언어:** Python, SQL
+* Deployed a REST API on an AWS EC2 instance
+* Built an ETL pipeline to apply encryption and compression algorithms to the API's logs and load it into an AWS S3 bucket
 
----
-
-### 프로젝트 개요
-
-- ETL 파이프라인 구축을 통해 API에서 수집한 로그 데이터에 암호화 및 압축 알고리즘을 적용하여 AWS S3에 적재
-- Ubuntu Linux 기반의 AWS EC2 인스턴스를 이용하여 직접 구축한 웹 API를 배포
-
-### 프로젝트 배경
-
-- ETL 파이프라인 구축을 통해 직접 구축한 REST API에서 발생한 로그 수집 및 AWS S3에 압축된 형태의 데이터 적재
-- 실제 API 기반 서비스에서 발생하는 로그 데이터 수집 및 적절한 형태로 클라우드 상에 적재하는 과정을 직접 진행
-
-
-### 프로젝트 기술 스택
+### Used Skills
 
 - **Backend**
     
-    ![DRF](https://img.shields.io/badge/django%20rest%20framework-092E20?style=for-the-badge&logo=django&logoColor=white)
-    ![EC2](https://img.shields.io/badge/AWS%20ec2-FF9900?style=for-the-badge&logo=amazonec2&logoColor=white)
+    ![DRF](https://img.shields.io/badge/django%20rest%20framework-092E20?style=for-the-badge&logo=django&logoColor=white) ![EC2](https://img.shields.io/badge/AWS%20ec2-FF9900?style=for-the-badge&logo=amazonec2&logoColor=white)
     
-- **Database**
+- **Data Storage**
     
-    ![MySQL](https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
-    ![AWSS3](https://img.shields.io/badge/aws%20s3-569A31?style=for-the-badge&logo=amazons3&logoColor=white)
-    
-- **Tools**
-    
-    ![github](https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white) ![discord](https://img.shields.io/badge/discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)
+    ![MySQL](https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white) ![AWSS3](https://img.shields.io/badge/aws%20s3-569A31?style=for-the-badge&logo=amazons3&logoColor=white)
     
 
-**EC2 선택 이유**
+**Reasons for choosing EC2**
 
-- 추후 프로젝트 확장 및 유지보수 시 Lambda, S3 등 다양한 AWS 서비스들과 연계하여 사용할 수 있음 
-- AWS의 Free Tier 로도 Linux 기반 인스턴스를 구축할 수 있어 비용 부담이 덜함
+* Can be used in conjunction with other AWS services such as Lambda and S3 for future project expansion and maintenance 
+- Small instances are eligible for AWS's Free Tier, making it less costly
+### Participants and Roles
 
-### 개발 인원
-
-| 이름   | 담당 업무                                                                                                                                                                                                 |
+| GitHub ID   | Roles                                                                                                                                                                                                 |
 |--------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 홍석원 | - 로그 해싱 및 암호화, 로그 파일에 압축 알고리즘 적용<br>- AWS S3 버킷 생성 및 로그파일 업로드 기능 구현<br>- AWS EC2를 통한 API 배포 |
-| 민경도 | - 계정 생성 및 활동 로그 생성을 위한 봇 구현<br> - AWS EC2를 이용한 웹서버 구축 및 API 배포<br> - Crontab을 통한 로그 생성 및 압축 알고리즘 적용 스케줄링  |
+| @orange-hour | - Encrypted and applied compression algorithms to log files<br>- Implemented log file uploads to AWS S3 |
+| @ggydo59 | - Deployed the API on AWS EC2<br> - Built a bot for automating API requests and generating logs<br> - Scheduled log creation and applying compression algorithms on log files via Crontab  |
 
-### 프로젝트 진행 과정
+### Project implementation details
 
-1. 로그 데이터 암호화 기능 구현, 압축 알고리즘 적용
-2. API를 활용한 더미 데이터 생성을 위한 봇(bot) 구현
-3. AWS S3 버킷 생성 및 로그 업로드 기능 구현
-4. AWS EC2를 활용한 웹서버 구축 및 API 배포, 스케줄링 기능 구현
+The following steps are scheduled on a designated time interval using Crontab: 
+1. The bot sends multiple API requests to the deployed API server for generating logs
+2. The log files are encrypted using two-way encryption
+2. The encrypted log files are compressed using gzip
+4. The log files are uploaded to AWS S3
 
-### 프로젝트 구현 내용
+![image](https://github.com/orange-hour/ETL_pipeline/assets/46596653/fffa3706-242c-4020-ba58-436a38a6eefb)
 
-1. **로그 데이터 암호화 기능**
-<img width="903" alt="image" src="https://user-images.githubusercontent.com/46596653/210942472-4f6b5606-27f2-42fe-b76b-d4aa87e132c9.png">
-<img width="916" alt="image" src="https://user-images.githubusercontent.com/46596653/210942578-7ad953d0-0cad-490b-9549-9cf4aff57060.png">
+### Project limitations and possible improvements
 
-2. **API를 활용한 더미 데이터 생성을 위한 봇(bot)**
-<img width="907" alt="image" src="https://user-images.githubusercontent.com/46596653/210942704-173f089c-9a2f-44bf-8132-8c45610f18f7.png">
+**Limitations**
 
-3. **AWS S3 버킷 생성 및 로그 업로드 기능**
+- Failure to compress strings in the data compression process other than applying the gzip algorithm
+- Did not perform dynamic partitioning using the time scale of the data (e.g. daily, weekly)
 
-<img width="937" alt="image" src="https://user-images.githubusercontent.com/46596653/210942829-85ba4526-9d96-41ac-80e2-71decb473b9c.png">
+**Possible Improvements**
 
-
-4. **AWS EC2를 활용한 웹서버 구축 및 API 배포, 스케줄링 기능**
-<img width="1435" alt="image" src="https://user-images.githubusercontent.com/46596653/210943021-8a553f84-4655-4bcc-8b8a-9e8bb416f108.png">
-
-5. **최종 구축 결과**
-<img width="872" alt="image" src="https://user-images.githubusercontent.com/46596653/211131994-a3ea9747-0641-4b6e-833c-6dc72fcf4444.png">
-
-### 프로젝트 한계 및 개선 방안
-
-**한계**
-
-- 데이터 압축 과정에서 gzip 알고리즘 적용 이외 별도의 문자열 압축 과정을 진행하지 못함
-- 데이터의 time scale(예: 일 단위, 주 단위) 에 따른 Dynamic Partitioning을 진행하지 못함
-
-
-**개선 방안**
-
-- 문자열 압축 과정 별도로 추가 구현
-- Dynamic Partitioning을 진행한 데이터를 S3에 업로드하는 기능 추가
+- Implementing an additional string compression process
+- Adding steps to further partition the data before uploading it to S3
